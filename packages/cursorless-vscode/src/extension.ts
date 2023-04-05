@@ -76,7 +76,6 @@ export async function activate(
 
   const graph = makeGraph({
     ...graphFactories,
-    commandServerApi: () => commandServerApi,
   } as FactoryMap<Graph>);
 
   const snippets = new Snippets();
@@ -85,7 +84,7 @@ export async function activate(
   const hats = new VscodeHats(vscodeIDE, context);
   await hats.init();
 
-  const hatTokenMap = new HatTokenMapImpl(graph, debug, hats);
+  const hatTokenMap = new HatTokenMapImpl(graph, debug, hats, commandServerApi);
   hatTokenMap.allocateHats();
 
   const testCaseRecorder = new TestCaseRecorder(hatTokenMap);
